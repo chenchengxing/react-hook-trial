@@ -14,6 +14,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 
 function App() {
   const [open, setOpen] = React.useState(false);
@@ -37,6 +38,12 @@ function App() {
         })}
         
       </Body>
+
+      <TextField
+        id="standard-name"
+        label="Name"
+      />
+
       <Fab color="primary" aria-label="add" onClick={handleClick}>
         <AddIcon />
       </Fab>
