@@ -1,76 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Header from './comps/Header'
-import Block from './comps/Block'
-import Body from './comps/Body'
-import blocks from './blockData'
+import LoginForm from './comps/LoginForm'
 
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+import Index from './pages/IndexPage'
+
+function About() {
+  return <h2>About</h2>;
+}
+
+function Users() {
+  return <h2>Users</h2>;
+}
+
+function AppRouter() {
+  return (
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/about/">About</Link>
+            </li>
+            <li>
+              <Link to="/users/">Users</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Route path="/" exact component={Index} />
+        <Route path="/about/" component={About} />
+        <Route path="/users/" component={Users} />
+      </div>
+    </Router>
+  );
+}
 
 function App() {
-  const [open, setOpen] = React.useState(false);
+  const [ loggedIn, setLoggedIn ] = useState(false)
+  const handleLoginSubmit = (value) => {
+    console.log('handleLoginSubmit clicked')
+    // fetch('/user/login', data: {
+    //   username: value
+    // }).then(response => {
+    //   if (response.passed === true) {
+    //     setLoggedIn(true)
+    //   }
+    // })
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleClick = e => {
-    console.log('clicked')
-    setOpen(true);
+    if (value === 'mario') {
+      
+      setLoggedIn(true)
+    }
+  }
+  if (!loggedIn) {
+    return <LoginForm onLoginSubmit={handleLoginSubmit}/>
   }
   return (
     <div className="App">
       <Header></Header>
-      <Body>
-        { blocks.map(block => {
-          return <Block data={block}>
-
-          </Block>
-        })}
-        
-      </Body>
-
-      <TextField
-        id="standard-name"
-        label="Name"
-      />
-
-      <Fab color="primary" aria-label="add" onClick={handleClick}>
-        <AddIcon />
-      </Fab>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Disagree
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <AppRouter />
+      
     </div>
   );
 }
+
 
 export default App;
