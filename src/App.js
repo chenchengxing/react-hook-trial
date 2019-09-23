@@ -32,7 +32,7 @@ function App() {
       <Header></Header>
       <Body>
         { blocks.map(block => {
-          return <Block data={block}>
+          return <Block data={block} key={block.A.name + block.B.name}>
 
           </Block>
         })}
